@@ -1,8 +1,8 @@
-##### 手册地址：http://www.kancloud.cn/jqcool/jqadmin
 
-##### 官方地址：http://jqadmin.jqcool.net/
 
-## jQadmin后台模板v1.3.4r1 2017-05-08
+##### 预览地址：https://tlx6550.github.io/layuiadmin/
+
+
 
 - 修复火狐刷新打开菜单列表出错BUG
 
@@ -33,4 +33,4 @@
 - 修复首页的统计链接
 - 添加看云使用手册
 
-
+##### 手册地址：http://www.kancloud.cn/jqcool/jqadmin
