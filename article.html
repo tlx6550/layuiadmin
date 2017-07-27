@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>jQadmin后台模板</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <!-- load css -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css?v=v3.3.7" media="all">
+    <link rel="stylesheet" type="text/css" href="css/font/iconfont.css?v=1.0.0" media="all">
+    <link rel="stylesheet" type="text/css" href="css/layui.css?v=1.0.9" media="all">
+    <link rel="stylesheet" type="text/css" href="css/main.css?v1.3.4" media="all">
+
+</head>
+
+<body>
+    <div class="container-fluid larry-wrapper">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <!--头部搜索-->
+                <section class="panel panel-padding">
+                    <form class="layui-form" action="/php/data.php">
+                        <div class="layui-form">
+                            <div class="layui-inline">
+                                <select name="city" lay-verify="required" lay-filter="ajax" data-params='{"url": "/php/test.php","data":"id=1&name=ni&va=23","confirm":"true"}'>
+                                    <option value="0">请选择分类</option>
+                                    <option value="010">北京</option>
+                                    <option value="021">上海</option>
+                                    <option value="0571">杭州</option>
+                                </select>
+                            </div>
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input class="layui-input start-date" name="start_date" placeholder="开始日">
+                                </div>
+                                <div class="layui-input-inline">
+                                    <input class="layui-input end-date" name="end_date" placeholder="截止日">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input class="layui-input" name="keyword" placeholder="关键字">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button lay-submit class="layui-btn" lay-filter="search">查找</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <!--列表-->
+                <section class="panel panel-padding">
+                    <div class="group-button">
+                        <button class="layui-btn layui-btn-small layui-btn-danger ajax-all" data-name="checkbox" data-params='{"url": "/php/test.php","data":"id=1&name=ni&va=23","confirm":"true"}'>
+                            <i class="iconfont">&#xe626;</i> 删除
+                        </button>
+                        <button class="layui-btn layui-btn-small layui-btn-normal ajax-all" data-name="checkbox" data-params='{"url": "/php/test.php","data":"id=1&name=hao","confirm":"true"}'>
+                            <i class="iconfont">&#xe60c;</i> 推荐
+                        </button>
+                        <button class="layui-btn layui-btn-small layui-btn-normal ajax-all" data-name="checkbox" data-params='{"url": "/php/test.php","data":"id=1&name=hao&va=23"}'>
+                            <i class="iconfont">&#xe603;</i> 置顶
+                        </button>
+                        <button class="layui-btn layui-btn-small layui-btn-normal ajax-all" data-name="checkbox" data-params='{"url": "/php/test.php","data":"id=1&name=hao&va=23"}'>
+                            <i class="layui-icon">&#x1005;</i> 审核
+                        </button>
+                        <button class="layui-btn layui-btn-small modal-iframe" data-params='{"content": "article-add.html", "title": "添加文章","full":"true"}'>
+                            <i class="iconfont">&#xe649;</i> 添加
+                        </button>
+                    </div>
+                    <div id="list" class="layui-form"></div>
+
+                    <div class="text-right" id="page"></div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script id="list-tpl" type="text/html" data-params='{"url":"./data/data.json","pageid":"#page","dataName":"articleData","tableWidth":"2200px"}'>
+    <table id="example" class="layui-table lay-even" data-name="articleData" data-tplid="list-tpl">
+        <thead>
+            <tr>
+                <th width="30"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check" lay-skin="primary"></th>
+                <th width="80">序号
+                    <div class="order-box">
+                        <a href="javascript:;" class="sort" data-filed="id" data-asc="true"><i class="iconfont" >&#xe615;</i></a>
+                        <a href="javascript:;" class="sort down" data-filed="id"><i class="iconfont">&#xe647;</i></a>
+                    </div>
+                </th>
+                <th>标题
+                    <div class="order-box">
+                        <a href="javascript:;" class="sort" data-filed="title" data-asc="true"><i class="iconfont" >&#xe615;</i></a>
+                        <a href="javascript:;" class="sort down" data-filed="title"><i class="iconfont">&#xe647;</i></a>
+                    </div>
+                </th>
+                <th>连接</th>
+                <th width="80">排序
+                    <div class="order-box">
+                        <a href="javascript:;" class="sort" data-filed="id" data-asc="true"><i class="iconfont" >&#xe615;</i></a>
+                        <a href="javascript:;" class="sort down" data-filed="id"><i class="iconfont">&#xe647;</i></a>
+                    </div>
+                </th>
+                <th width="80">审核</th>
+                <th width="152">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{# layui.each(d.list, function(index, item){ }}
+            <tr>
+                <td><input type="checkbox" name="checkbox" value="{{ item.id}}" lay-skin="primary"></td>
+                <td>{{ item.id}}</td>
+                <td class="edit" data-list='{"key":"id={{ item.id}}","filed":"title","render":"true"}' data-params='{"url":"./data/success.json","data":"id={{ item.id}}"}'>{{ item.title}}</td>
+                <td>{{ item.url}}</td>
+                <td><input type="text" class="layui-input ajax-blur" data-list='{"key":"id={{ item.id}}","filed":"order","render":"true","action":"edit"}' name="order" value="{{ item.order}}" data-params='{"url":"./data/success.json","data":"id={{  item.id }}","loading":"false"}'>                    </td>
+                <td><input type="checkbox" name="switch" lay-skin="switch" data-list='{"key":"id={{ item.id}}","filed":"switch","render":"true","action":"edit"}' lay-text="已审|未审" {{#if (parseInt(item.switch)){ }}checked="checked" {{# } }} lay-filter="ajax"
+                        data-params='{"url":"./data/success.json","confirm":"true","data":"id={{ item.id}}&name=paco" {{#if (item.id==1){ }},"complete":"test"{{# } }} }' value="1"> </td>
+                <td>
+                    <button class="layui-btn layui-btn-mini modal-iframe" data-params='{"content": "article-add.html", "title": "{{item.title}}","full":"true","key":"id={{ item.id}}"}'>
+                        <i class="iconfont">&#xe653;</i>编辑
+                    </button>
+                    <button class="layui-btn layui-btn-mini layui-btn-danger ajax" data-list='{"key":"id={{ item.id}}","msg":true,"render":"true","action":"del"}' data-params='{"url": "./data/success.json","confirm":"true","data":"id=1&name=ni"}'>
+                        <i class="iconfont">&#xe626;</i>删除
+                    </button></td>
+                </td>
+            </tr>
+            {{# }); }}
+        </tbody>
+    </table>
+</script>
+
+<script src="js/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: 'js/',
+        version: "1.3.4r"
+    }).extend({
+        elem: 'jqmodules/elem',
+        tabmenu: 'jqmodules/tabmenu',
+        jqmenu: 'jqmodules/jqmenu',
+        ajax: 'jqmodules/ajax',
+        dtable: 'jqmodules/dtable',
+        jqdate: 'jqmodules/jqdate',
+        modal: 'jqmodules/modal',
+        tags: 'jqmodules/tags',
+        jqform: 'jqmodules/jqform',
+        echarts: 'lib/echarts',
+        webuploader: 'lib/webuploader'
+    })
+</script>
+<script>
+    layui.use('list');
+
+    function test(ret, options, $) {
+        console.log($);
+        alert("这是自定义的ajax返回方法，可以用$哦");
+    }
+</script>
+
+</html>
